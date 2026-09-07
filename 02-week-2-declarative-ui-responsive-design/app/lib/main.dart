@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// 3. Move the breakpoint into a single named constant
+const double kWideBreakpoint = 700;
+
 void main() => runApp(const DashboardApp());
 
 class DashboardApp extends StatefulWidget {
@@ -74,19 +77,16 @@ class DashboardPage extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // Responsive layout: 1 column on narrow screens, 2 on wide screens
-          final isWide = constraints.maxWidth >= 700;
+          final isWide = constraints.maxWidth >= kWideBreakpoint;
           final columns = isWide ? 2 : 1;
 
           return Column(
             children: [
-              // Profile Header Section
               const Padding(
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
                 child: ProfileCard(),
               ),
 
-              // Information Cards Section
               Expanded(
                 child: GridView.count(
                   padding: const EdgeInsets.all(16),
@@ -95,10 +95,10 @@ class DashboardPage extends StatelessWidget {
                   mainAxisSpacing: 16,
                   childAspectRatio: isWide ? 3.2 : 2.6,
                   children: const [
-                    DashboardCard(title: 'Assignments', value: '8'),
-                    DashboardCard(title: 'Attendance', value: '92%'),
-                    DashboardCard(title: 'Portfolio', value: 'Ready'),
-                    DashboardCard(title: 'Current week', value: '02'),
+                    InfoCard(title: 'Assignments', value: '8'),
+                    InfoCard(title: 'Attendance', value: '92%'),
+                    InfoCard(title: 'Portfolio', value: 'Not Ready'),
+                    InfoCard(title: 'Current week', value: '02'),
                   ],
                 ),
               ),
@@ -117,6 +117,7 @@ class ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return Semantics(
       label: 'Student Profile Information',
@@ -144,13 +145,13 @@ class ProfileCard extends StatelessWidget {
                     children: [
                       Text(
                         'Student Name',
-                        style: theme.textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        'Alex Morgan',
-                        style: theme.textTheme.bodyMedium,
+                        'Eiyu Azizuly Efendi',
+                        style: textTheme.bodyMedium,
                       ),
                     ],
                   ),
@@ -161,11 +162,11 @@ class ProfileCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text('Student ID', style: theme.textTheme.bodyMedium),
+                  child: Text('Student ID', style: textTheme.bodyMedium),
                 ),
                 Text(
-                  'CS-2026-089',
-                  style: theme.textTheme.bodyMedium?.copyWith(
+                  '244107020181',
+                  style: textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -175,11 +176,11 @@ class ProfileCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text('Class', style: theme.textTheme.bodyMedium),
+                  child: Text('Class', style: textTheme.bodyMedium),
                 ),
                 Text(
-                  'Informatics 3A',
-                  style: theme.textTheme.bodyMedium?.copyWith(
+                  'TI-3I',
+                  style: textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -192,14 +193,16 @@ class ProfileCard extends StatelessWidget {
   }
 }
 
-class DashboardCard extends StatelessWidget {
-  const DashboardCard({required this.title, required this.value, super.key});
+class InfoCard extends StatelessWidget {
+  const InfoCard({required this.title, required this.value, super.key});
 
   final String title;
   final String value;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Card(
       child: MergeSemantics(
         child: Padding(
@@ -209,12 +212,12 @@ class DashboardCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: textTheme.titleMedium,
                 ),
               ),
               Text(
                 value,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: textTheme.headlineSmall,
                 semanticsLabel: '$value $title',
               ),
             ],
