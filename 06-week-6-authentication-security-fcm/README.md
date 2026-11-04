@@ -46,8 +46,6 @@ Tokens are stored only in `flutter_secure_storage`. The UI and logs use `truncat
 
 * **Do `flutter analyze` and `flutter test` pass?**
 
-![flutter analyze and flutter test](./screenshots/Test.png)
-
 ### Modifications to AI-Generated Code
 
 After reviewing the AI output, the following fixes were needed to make the project build and behave correctly:
@@ -64,9 +62,6 @@ After reviewing the AI output, the following fixes were needed to make the proje
 * **Extracted `routeFromMessage`** as a pure function so route parsing can be tested without Firebase.
 * **Moved Dio error mapping into `lib/data/api_errors.dart`** (`friendlyError`) so the UI only receives user-friendly messages.
 * **Tests** in `test/auth_push_test.dart` cover route parsing (empty, slash-less, and full routes), the data payload id, login status from the token, and forcing re-login after a failed refresh.
-
-![Refactoring result](./screenshots/Refactoring.png)
-![flutter analyze and flutter test](./screenshots/Test.png)
 
 ## Reflection
 
