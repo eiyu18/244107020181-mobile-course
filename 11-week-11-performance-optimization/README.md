@@ -1,5 +1,4 @@
-# Flutter Week 10 - AI Features
+# Flutter Week 11 - Perfomance Optimizations
 
-![](./Screenshots/GeminiKey.jpeg)
-![](./Screenshots/AIchat.jpeg)
-![](./Screenshots/FlutterTestAnalyze.png)
+![](./Screenshots/before_profile)
+![](./Screenshots/after_profile.jpeg)
