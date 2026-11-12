@@ -86,19 +86,39 @@ class _HomePageState extends ConsumerState<HomePage> {
                       textAlign: TextAlign.center,
                     ),
                   )
-                : ListView(
-                    children: [
-                      for (final announcement in announcements)
-                        ListTile(
-                          title: Text(announcement.title),
-                          onTap: () => context.go(
-                            AppRoutes.announcement(announcement.id),
-                          ),
-                        ),
-                    ],
+                : _AnnouncementsList(
+                    announcements: announcements,
+                    onAnnouncementTap: (id) =>
+                        context.go(AppRoutes.announcement(id)),
                   ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AnnouncementsList extends StatelessWidget {
+  const _AnnouncementsList({
+    required this.announcements,
+    required this.onAnnouncementTap,
+  });
+
+  final List<({String id, String title})> announcements;
+  final ValueChanged<String> onAnnouncementTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      child: ListView.builder(
+        itemCount: announcements.length,
+        itemBuilder: (context, index) {
+          final announcement = announcements[index];
+          return ListTile(
+            title: Text(announcement.title),
+            onTap: () => onAnnouncementTap(announcement.id),
+          );
+        },
       ),
     );
   }
